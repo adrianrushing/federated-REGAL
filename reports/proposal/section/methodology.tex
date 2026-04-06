@@ -62,12 +62,13 @@ Server computes or applies shared transform to obtain $\{Z^{(k)}\}_{k=1}^m$\;
 \begin{table}[htbp]
     \centering
     \caption{Synergy Analysis: FedSpray vs. F-REGAL}
-    \begin{tabular}{@{}llll@{}}
+    \small
+    \begin{tabularx}{\textwidth}{@{}p{0.16\textwidth}XXX@{}}
         \toprule
         \textbf{Feature} & \textbf{FedSpray Role} & \textbf{F-REGAL Role} & \textbf{Hybrid Advantage} \\ \midrule
         Primary Function & Federated orchestration and correction & Node-level structural alignment & Privacy-preserving cross-silo matching \\
         Granularity & Class/proxy-informed supervision & Node-specific correspondences & Fine-grained structural consistency \\
         Scalability & Client-round efficient coordination & Sub-quadratic approximate matching & Large-graph alignment under federation \\ \bottomrule
-    \end{tabular}
+    \end{tabularx}
     \label{tab:synergy}
 \end{table}
