@@ -1,0 +1,73 @@
+\section{Method}
+F-REGAL combines REGAL's structural alignment with FedSpray's federated orchestration to align nodes across private graph silos without sharing raw edges or node attributes. The pipeline is designed so all clients produce embeddings in the same latent coordinate system, enabling server-side matching.
+
+\subsection{Federated Structural Configuration (Server-Side)}
+Before local computation, the server broadcasts a shared structural configuration:
+\begin{itemize}[leftmargin=*]
+    \item global maximum degree limit $d_{\max}^{(g)}$ for consistent feature dimensionality,
+    \item neighborhood depth $K$ and discount factor $\delta$ for structural identity extraction,
+    \item shared basis size $p$ (landmark count) and basis version identifier.
+\end{itemize}
+This configuration enforces a common feature space of width $K(d_{\max}^{(g)}+1)$ across all clients, preventing index-space and dimensional mismatches during alignment.
+
+\subsection{Local Structural Fingerprinting (Client-Side)}
+Each client $k$ owns a private graph $\mathcal{G}^{(k)}=(V^{(k)},E^{(k)})$ and computes node structural identity locally:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Degree-bucket encoding:} node degrees are mapped to logarithmic bins for robustness to local degree variance.
+    \item \textbf{$K$-hop neighborhood aggregation:} for each node $v_i$, structural descriptors are accumulated over expanding neighborhoods with decay $\delta$.
+    \item \textbf{Shared-basis projection input:} each client forms structural feature vectors with the server-specified dimensionality, then computes local similarity terms required for xNetMF-style projection.
+\end{enumerate}
+No raw adjacency matrix, edge list, or raw attributes are transmitted.
+
+\subsection{Shared Representation via Federated xNetMF}
+Let $F^{(k)} \in \mathbb{R}^{|V^{(k)}| \times K(d_{\max}^{(g)}+1)}$ denote client features. Using the shared basis, clients compute local similarity blocks that are compatible across silos. The server then coordinates a common transform (Nystr\"om/xNetMF style) and obtains aligned embeddings
+\[
+Z^{(k)} \in \mathbb{R}^{|V^{(k)}| \times d},
+\]
+where all $Z^{(k)}$ lie in the same latent space. This removes the centralized requirement to build a single block-diagonal adjacency matrix while preserving structural comparability.
+
+\subsection{Server-Side Alignment}
+The server receives only low-dimensional embeddings and performs node matching using nearest-neighbor retrieval (KD-tree), reusing REGAL's top-$n$ alignment logic. For client pair $(a,b)$, similarity scores are computed from embedding distances and stored in sparse form:
+\[
+S_{ij}^{(a,b)} = \exp(-\|z_i^{(a)} - z_j^{(b)}\|_2).
+\]
+The output is a set of candidate correspondences with confidence scores and metadata (basis version, embedding version, client pair id).
+
+\subsection{FedSpray Synergy}
+FedSpray is used as the federated coordination layer and correction mechanism:
+\begin{itemize}[leftmargin=*]
+    \item orchestrates round-based communication and aggregation control,
+    \item supports structurally informed correction through knowledge distillation signals,
+    \item preserves privacy constraints while enabling cross-silo alignment outputs.
+\end{itemize}
+In this hybrid design, FedSpray handles federated training logistics, while REGAL provides the node-level alignment engine.
+
+\begin{algorithm}[htbp]
+\caption{F-REGAL Federated Alignment Protocol}
+\KwIn{Client graphs $\{\mathcal{G}^{(k)}\}_{k=1}^m$, shared config $(d_{\max}^{(g)},K,\delta,p)$}
+\KwOut{Top-$n$ node alignments between selected client pairs}
+Server broadcasts shared structural config and basis metadata\;
+\For{each client $k$ in parallel}{
+  Compute local structural features $F^{(k)}$ with width $K(d_{\max}^{(g)}+1)$\;
+  Compute shared-basis similarity quantities locally\;
+  Send privacy-safe representation payload to server\;
+}
+Server computes or applies shared transform to obtain $\{Z^{(k)}\}_{k=1}^m$\;
+\For{each requested client pair $(a,b)$}{
+  Build KD-tree on $Z^{(b)}$, query top-$n$ neighbors for $Z^{(a)}$\;
+  Compute sparse similarity scores and return candidate matches\;
+}
+\end{algorithm}
+
+\begin{table}[htbp]
+    \centering
+    \caption{Synergy Analysis: FedSpray vs. F-REGAL}
+    \begin{tabular}{@{}llll@{}}
+        \toprule
+        \textbf{Feature} & \textbf{FedSpray Role} & \textbf{F-REGAL Role} & \textbf{Hybrid Advantage} \\ \midrule
+        Primary Function & Federated orchestration and correction & Node-level structural alignment & Privacy-preserving cross-silo matching \\
+        Granularity & Class/proxy-informed supervision & Node-specific correspondences & Fine-grained structural consistency \\
+        Scalability & Client-round efficient coordination & Sub-quadratic approximate matching & Large-graph alignment under federation \\ \bottomrule
+    \end{tabular}
+    \label{tab:synergy}
+\end{table}

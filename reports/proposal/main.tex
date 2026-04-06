@@ -1,0 +1,115 @@
+\documentclass{article}
+
+% --- NeurIPS Style Emulation for Single-File Compilation ---
+\usepackage[letterpaper]{geometry}
+\geometry{
+  textheight=9in,
+  textwidth=5.5in,
+  top=1in,
+  headheight=12pt,
+  headsep=25pt,
+  footskip=30pt
+}
+
+% Standard PDFLaTeX/LuaLaTeX compatible packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts}
+\usepackage{nicefrac}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{xspace}
+\usepackage[linesnumbered,ruled,vlined]{algorithm2e}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{subcaption}
+\usepackage{hyperref}
+
+% NeurIPS font settings (Times for main text)
+\usepackage{times}
+
+% Custom macros for the checklist
+\newcommand{\answerYes}[1][]{\textcolor{blue}{[Yes] #1}}
+\newcommand{\answerNo}[1][]{\textcolor{orange}{[No] #1}}
+\newcommand{\answerNA}[1][]{\textcolor{gray}{[NA] #1}}
+
+% NeurIPS-like Title Box Formatting
+\makeatletter
+\def\@maketitle{%
+  \vbox{%
+    \hsize\textwidth
+    \linewidth\hsize
+    \vskip 0.1in
+    \hrule height 4\p@
+    \vskip 0.25in
+    \centering
+    {\LARGE\bf \@title \par}
+    \vskip 0.29in
+    \hrule height 1\p@
+    \vskip 0.2in
+    \begin{tabular}[t]{c}\bf\@author\end{tabular}%
+    \vskip 0.3in
+  }
+}
+\makeatother
+
+% NeurIPS Abstract Styling
+\renewenvironment{abstract}%
+{%
+  \centerline{\large\bf Abstract}%
+  \vspace{0.5ex}%
+  \begin{quote}%
+}
+{
+  \end{quote}%
+  \vskip 1ex%
+}
+
+\title{F-REGAL: Improving Federated Graph Alignment with Structural Identity and FedSpray Integration}
+
+\author{
+  Adrian Rushing$^1$ \quad Joseph Williams$^1$ \\
+  $^1$Auburn University \\
+  \texttt{\{arushing, jwilliams\}@auburn.edu}
+}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Federated Graph Learning (FGL) faces significant hurdles due to data heterogeneity and the ``majority class poisoning'' effect inherent in standard Graph Neural Network (GNN) message passing. While existing methods like FedSpray address class-wise biases through feature-structure encoding, they often lack the fine-grained structural awareness required for precise node-to-node alignment across disjoint silos. In this work, we propose \textbf{F-REGAL}, a hybrid framework that integrates \textbf{REGAL} (RElational Graph ALignment) with \textbf{FedSpray}. F-REGAL leverages structural identity---defined via logarithmic degree binning and $k$-hop neighbor aggregation---and uses xNetMF for cross-network matrix factorization within a privacy-preserving federated setting. By combining FedSpray's knowledge distillation correction mechanism with REGAL's sub-quadratic node matching, our approach enables alignment-aware embeddings that handle millions of nodes while maintaining strict data sovereignty.
+\end{abstract}
+
+\input{section/introduction}
+
+\input{section/related_work}
+
+\input{section/methodology}
+
+\input{section/experiment}
+
+\input{section/conclusion}
+
+\bibliographystyle{unsrt}
+\begin{thebibliography}{9}
+\bibitem{sun2020adaptive}
+Wen Sun, Shiyu Lei, Lu Wang, Zhiqiang Liu, and Yan Zhang. 
+\newblock Adaptive federated learning and digital twin for industrial internet of things. 
+\newblock \textit{IEEE Transactions on Industrial Informatics}, 17(8):5605--5614, 2020.
+
+\bibitem{ramu2022federated}
+Swarna Priya Ramu, et al. 
+\newblock Federated learning enabled digital twins for smart cities: Concepts, recent advances, and future directions. 
+\newblock \textit{Sustainable Cities and Society}, 79:103663, 2022.
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,6 @@
+\section{Introduction}
+Graph-structured data is ubiquitous in sensitive domains such as financial fraud detection, supply chain management, and medical informatics. However, privacy regulations often prevent the centralization of these graphs, necessitating Federated Learning (FL) approaches. A critical challenge in this setting is \textit{Graph Alignment}: identifying corresponding nodes across different networks (e.g., matching a user across Twitter and LinkedIn) without sharing raw edge data.
+
+Traditional GNNs in FL suffer from two main flaws: (1) \textbf{Homophily Assumption}, where connected nodes are assumed to share labels, and (2) \textbf{Message-Passing Bias}, where minority nodes are overwhelmed by features from majority-class neighbors in ``bad neighborhoods.'' While \textbf{FedSpray} provides a mechanism to correct these biases using synthetic ``structure proxies,'' it primarily operates at a class-wise level. Conversely, \textbf{REGAL} provides a powerful framework for structural identity-based matching but lacks a native federated integration that accounts for local model drift.
+
+This report introduces F-REGAL, which bridges this gap. By utilizing Nyström approximation and xNetMF, we allow clients to compute similarity to global landmarks locally, ensuring that raw edges never leave the client.
