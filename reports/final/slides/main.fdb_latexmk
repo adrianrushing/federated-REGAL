@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1776696550.79788 "/home/adrian/school/grad_classes/fed_learn/final_project/reports/final/slides/main.tex" "main.pdf" "main" 1776696551.75564 0
+["pdflatex"] 1776711902.08294 "/home/adrian/school/grad_classes/fed_learn/final_project/reports/final/slides/main.tex" "main.pdf" "main" 1776711903.59567 0
   "/etc/texmf/web2c/texmf.cnf" 1772488032.69406 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/adrian/school/grad_classes/fed_learn/final_project/reports/final/slides/main.tex" 1776696549.65654 9384 6e7d466d8c627168f6a5cd23dfe5df9d ""
+  "/home/adrian/school/grad_classes/fed_learn/final_project/reports/final/slides/main.tex" 1776711900.04082 9534 e13b36aaa770a66067bf17aa4148c34f ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecss0500.tfm" 1136768653 3584 3cb5b0e5e7e89823423413806ab1d938 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecss0600.tfm" 1136768653 3584 29c1411d292c531bfea559d981c42321 ""
@@ -223,10 +223,11 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1772488045.8975 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1772488117 8213666 765526ef34d4c84fc331ecf2b3b7a4ad ""
-  "main.aux" 1776696551.68461 2447 4f78fd9a548cbee358bd1671117ea11a "pdflatex"
-  "main.nav" 1776696551.68561 1574 f5abf7444d939a8c2cd188b6df8c9c87 "pdflatex"
-  "main.out" 1776696551.25959 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "main.tex" 1776696549.65654 9384 6e7d466d8c627168f6a5cd23dfe5df9d ""
+  "chart.png" 1776711820.71677 47279 878451bc53c4baa3ef11a1f18e3ffd8d ""
+  "main.aux" 1776711903.46278 2576 e79bee7da371a3fd75137b5cd1d80382 "pdflatex"
+  "main.nav" 1776711903.46498 1667 223530e0d280496bcaab89de82b2e7ab "pdflatex"
+  "main.out" 1776711903.26978 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "main.tex" 1776711900.04082 9534 e13b36aaa770a66067bf17aa4148c34f ""
   (generated)
   "main.aux"
   "main.log"

@@ -405,6 +405,11 @@ INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecss0500.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/sansmathaccent/mathkerncmssi10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/sansmathaccent/mathkerncmssi8.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/sansmathaccent/mathkerncmssi8.tfm
+INPUT ./chart.png
+INPUT ./chart.png
+INPUT ./chart.png
+INPUT ./chart.png
+INPUT ./chart.png
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecss1200.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecss2488.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecsx2488.tfm

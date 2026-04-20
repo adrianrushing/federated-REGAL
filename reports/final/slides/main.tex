@@ -19,6 +19,7 @@
 
 \usepackage{booktabs}
 \usepackage{amsmath}
+\usepackage{graphicx}
 
 \title[F-REGAL Final]{F-REGAL: Federated Graph Alignment}
 \subtitle{Proof of Concept with PubMed, REGAL, and FedAvg Integration}
@@ -41,7 +42,7 @@
     \textbf{Goal:} Build a baseline pipeline that performs federated alignment and supports downstream GNN training.
 \end{frame}
 
-\begin{frame}{Why This Is Hard in Practice}
+\begin{frame}{Implementation Difficulties}
     \begin{itemize}
         \item \textbf{No raw graph sharing:} privacy policies block sharing edges and local neighborhoods.
         \item \textbf{Heterogeneous silos:} clients have different graph slices and label distributions.
@@ -64,7 +65,7 @@
     \]
 \end{frame}
 
-\begin{frame}{Pipeline View: Client and Server Roles}
+\begin{frame}{Client and Server Roles}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \textbf{Client-side (private)}
@@ -117,7 +118,7 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{Notebook Configuration Used}
+\begin{frame}{Configuration Used}
     \begin{itemize}
         \item Structural extraction depth and decay: $K=2$, $\delta=0.5$.
         \item Shared landmark basis size: 250 proxy nodes.
@@ -142,6 +143,11 @@
     \begin{itemize}
         \item 30 rounds, 5 local epochs, Adam with weight decay.
     \end{itemize}
+\end{frame}
+
+\begin{frame}{Experiment Chart}
+    \centering
+    \includegraphics[width=0.92\textwidth,height=0.78\textheight,keepaspectratio]{chart.png}
 \end{frame}
 
 \begin{frame}{Results: Alignment Quality}
