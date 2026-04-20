@@ -1,0 +1,241 @@
+\documentclass[11pt, aspectratio=169]{beamer}
+
+% --- THEME SETTINGS ---
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+% --- UNIVERSAL PREAMBLE BLOCK ---
+\usepackage{iftex}
+\ifPDFTeX
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\else
+\usepackage{fontspec}
+\usepackage[english, bidi=basic, provide=*]{babel}
+\babelprovide[import, onchar=ids fonts]{english}
+
+% Set default/Latin fonts to the Noto family (Beamer primarily uses the 'sf' slot)
+\babelfont{rm}{Noto Serif}
+\babelfont{sf}{Noto Sans}
+\babelfont{tt}{Noto Sans Mono}
+\fi
+
+% --- ADDITIONAL PACKAGES ---
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+% --- TITLE PAGE INFORMATION ---
+\title[Federated Graph Alignment]{Federated Graph Alignment}
+\subtitle{Improving FGL with Structural Identity and xNetMF \\ REGAL \& FedSpray Integration}
+\author[Rushing \& Williams]{Adrian Rushing \and Joseph Williams}
+\date{\today}
+
+\begin{document}
+
+% Slide 1
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% Slide 2
+\begin{frame}{Graph Data Structures in FL}
+    \begin{block}{Nodes \& Edges}
+        Represents structural entities ($V$) and their connective relationships ($E$) within a decentralized network space.
+    \end{block}
+    
+    \vspace{0.3cm}
+    \begin{block}{Node Attributes}
+        Describes features of the data and node attributes using matrices $X$, which contain rich, local contextual data.
+    \end{block}
+    
+    \vspace{0.3cm}
+    \begin{block}{Distributed Data}
+        Data securely resides on private clients. The individual graphs are disjoint but maintain partial semantic overlaps.
+    \end{block}
+\end{frame}
+
+% Slide 3
+\begin{frame}{Motivation: Collaboration \& Privacy}
+    Information sharing is vital while strictly maintaining institutional privacy guidelines.
+    
+    \vspace{0.5cm}
+    \begin{itemize}
+        \item \textbf{Fraud Detection:} Enhances the tracing of complex money laundering schemes and identifies insurance fraud.
+        \vspace{0.3cm}
+        \item \textbf{Medical Data:} Enables hospitals to share insights on patient networks privately to improve diagnostic models.
+        \vspace{0.3cm}
+        \item \textbf{Supply Chain:} Helps multi-national entities identify single points of failure across distinct silos.
+    \end{itemize}
+\end{frame}
+
+% Slide 4
+\begin{frame}{Fundamental Challenges in FGL}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Data Heterogeneity}
+                Clients naturally possess uneven and mismatched data distributions. This imbalance causes local models to pull their gradients in different, often conflicting directions, severely slowing down overall federated training convergence.
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Biased Information}
+                Minority nodes are frequently surrounded by an overwhelming number of majority classes. Models tend to pull in this ``bad neighborhood'' data during aggregation, ruining predictions for those underrepresented groups.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 5
+\begin{frame}{The Root Cause: Message Passing}
+    \begin{itemize}
+        \item \textbf{The Homophily Assumption:} Traditional GNNs incorrectly assume that connected nodes almost always share the exact same labels.
+        \vspace{0.4cm}
+        \item \textbf{The Message-Passing Flaw:} In federated environments, minority nodes experience high heterophily. Aggregation overwhelms the minority node's actual embedding.
+        \vspace{0.4cm}
+        \item \textbf{The Result:} Nodes are ultimately misclassified simply because of their geographical location in the network, not their actual intrinsic features.
+    \end{itemize}
+\end{frame}
+
+% Slide 6
+\begin{frame}{Under the Hood: FedSpray Architecture}
+    \begin{block}{Personalized Local GNNs}
+        Each client retains a customized GNN tailored to its highly specific local data distribution to handle structural heterogeneity natively.
+    \end{block}
+    
+    \begin{block}{Global Encoder}
+        A lightweight model residing entirely on the central server. To preserve privacy, it strictly does not train on any raw graphs.
+    \end{block}
+    
+    \begin{block}{Synthesizing Neighbors}
+        Combines a node's raw features with a ``Structure Proxy''---an idealized mathematical representation of a correct neighborhood.
+    \end{block}
+\end{frame}
+
+% Slide 7
+\begin{frame}{The Correction Mechanism: Knowledge Distillation}
+    \begin{itemize}
+        \item \textbf{Generating Soft Targets:} The global encoder outputs unbiased soft targets (ideal predictions) because it relies on clean proxies rather than noisy local edges.
+        \vspace{0.4cm}
+        \item \textbf{Aligning the Local Model:} During training, FedSpray forces the local GNN to mimic these global soft targets strictly using Knowledge Distillation (KD).
+        \vspace{0.4cm}
+        \item \textbf{The Ultimate Effect:} The local GNN learns to rely heavily on actual node features and global structural truth, safely overriding adverse local neighbors.
+    \end{itemize}
+\end{frame}
+
+% Slide 8
+\begin{frame}{Beyond Accuracy: Efficiency \& Privacy}
+    \begin{block}{Minority Supremacy}
+        FedSpray is algorithmically designed from the ground up to rescue minority nodes from persistent majority-class poisoning.
+    \end{block}
+    
+    \begin{block}{Communication Efficient}
+        Structure proxies are small, synthetic 1D vectors in latent space. Transmitting them is dramatically lighter than uploading GNN parameters.
+    \end{block}
+    
+    \begin{block}{Privacy by Design}
+        Because proxies are generated by averaging data across classes, the operation is irreversible. Raw edges never leave the client.
+    \end{block}
+\end{frame}
+
+% Slide 9
+\begin{frame}{The Graph Alignment Problem}
+    \begin{itemize}
+        \item \textbf{Core Objective:} Identify corresponding nodes across different structural networks (e.g., matching $G_1$ and $G_2$).
+        \vspace{0.4cm}
+        \item \textbf{Crucial Application:} Highly necessary for User Re-identification across platforms and large-scale Entity Resolution tasks.
+        \vspace{0.4cm}
+        \item \textbf{Major Challenges:} Tremendous scalability issues with large graphs, compounded by inherently noisy, incomplete structural connection data.
+    \end{itemize}
+\end{frame}
+
+% Slide 10
+\begin{frame}{REGAL Alignment Strategy}
+    \begin{itemize}
+        \item \textbf{Structural Identity:} Aligns nodes based purely on structural fingerprinting, modeling robust relationships to other distinct nodes.
+        \item \textbf{Local Features:} Extracts degree descriptors for each specific node utilizing comprehensive $k$-hop neighborhood aggregation methods.
+        \item \textbf{Degree Binning:} Employs logarithmic bins for degrees to safely stabilize high-degree node features against random structural noise.
+        \item \textbf{Cross-Network Embedding:} Leverages xNetMF algorithms to project nodes from separate networks into a unified, shared latent space.
+        \item \textbf{Final Alignment:} Performs highly efficient nearest-neighbor vector searches to finalize correspondence mapping across domains.
+    \end{itemize}
+\end{frame}
+
+% Slide 11
+\begin{frame}{The Nyström Approximation}
+    \begin{block}{Computational Bottleneck}
+        Calculating a full similarity matrix $S$ between all nodes in two large graphs carries a computationally prohibitive $\mathcal{O}(N^2)$ complexity. The Nyström Method is a low-rank matrix approximation technique that estimates the full matrix using only a tiny subset of data.
+    \end{block}
+    
+    \vspace{0.3cm}
+    \begin{block}{Landmark Formulation}
+        By picking $p$ representative ``landmark'' nodes (where $p \ll N$), we reduce complexity strictly to $\mathcal{O}(N)$.
+        \begin{equation*}
+            S \approx A B^{-1} A^T
+        \end{equation*}
+    \end{block}
+\end{frame}
+
+% Slide 12
+\begin{frame}{xNetMF for Federated Learning}
+    \begin{itemize}
+        \item \textbf{Attribute-Agnostic:} It fundamentally doesn't need to know \textit{what} a node is, operating solely on \textit{how} it connects to surrounding structures.
+        \item \textbf{Unified Embedding:} Guarantees that if node $i$ in Graph $A$ and node $j$ in Graph $B$ are structurally identical, their resulting vectors are nearly equal.
+        \item \textbf{Decentralization:} Allows individual clients to compute their similarity specifically to global landmarks locally, avoiding centralization.
+        \item \textbf{Data Privacy:} Raw structural edges never leave the client; only the harmless, low-rank similarity vectors (Matrix $A$) are shared.
+        \item \textbf{Consistency:} Because all clients uniformly use the exact same landmarks, the resulting embeddings are automatically pre-aligned.
+    \end{itemize}
+\end{frame}
+
+% Slide 13
+\begin{frame}{F-REGAL Synergy}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{The Client (Local --- REGAL)}
+                \begin{itemize}
+                    \item \textbf{Structural Fingerprinting:} Clients utilize REGAL (Degree Binning, $k$-hop aggregation) to explicitly define structural identities.
+                    \item \textbf{Local Proxy Generation:} Clients autonomously generate low-rank similarity vectors (Matrix $A$).
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{block}{The Server (Global --- FGL)}
+                \begin{itemize}
+                    \item \textbf{Privacy-Preserving Aggregation:} Securely collects only similarity vectors, ensuring strict Data Sovereignty.
+                    \item \textbf{Nyström Reconstruction:} Skillfully utilizes xNetMF to algorithmically align all vectors perfectly within a Shared Latent Space.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 14
+\begin{frame}{Synergy: FedSpray + F-REGAL}
+    \begin{table}
+        \centering
+        \renewcommand{\arraystretch}{1.5}
+        \begin{tabular}{@{}llll@{}}
+            \toprule
+            \textbf{Feature} & \textbf{FedSpray} & \textbf{F-REGAL} & \textbf{Hybrid Advantage} \\
+            \midrule
+            \textbf{Alignment Scope} & Class-wise & Node-specific & Fine-grained structural truth \\
+            \textbf{Primary Goal} & Personalized GNN & Node Matching & Alignment-aware embeddings \\
+            \textbf{Scalability} & Linear to Clients & Sub-quadratic & Handles millions of nodes \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+% Slide 15
+\begin{frame}
+    \vspace{2cm}
+    \begin{center}
+        \Huge{\textbf{Questions?}} \\
+        \vspace{1cm}
+        \Large{Thank you for your attention.} \\
+        \vspace{1.5cm}
+        \normalsize{\textit{Adrian Rushing \& Joseph Williams}}
+    \end{center}
+\end{frame}
+
+\end{document}

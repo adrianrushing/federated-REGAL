@@ -1,6 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1775519059.98285 "main.tex" "main.pdf" "main" 1775519060.47428 0
+["pdflatex"] 1776693745.79866 "/home/adrian/school/grad_classes/fed_learn/final_project/reports/proposal/main.tex" "main.pdf" "main" 1776693746.24915 0
   "/etc/texmf/web2c/texmf.cnf" 1772488032.69406 475 c0e671620eb5563b2130f56340a5fde8 ""
+  "/home/adrian/school/grad_classes/fed_learn/final_project/reports/proposal/main.tex" 1776693745.55641 3537 20c105f2bc1c0b801c313c55dcc6a28e ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrr8r.tfm" 1136768653 1292 bd42be2f344128bff6d35d98474adfe3 ""
@@ -130,9 +131,9 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1772488045.8975 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1772488117 8213666 765526ef34d4c84fc331ecf2b3b7a4ad ""
-  "main.aux" 1775519060.41295 2189 4302bb954c86fd1558a2f0f7c874aa13 "pdflatex"
-  "main.out" 1775519060.41295 1662 665f24b69dc7c416d325cf06e3ae3898 "pdflatex"
-  "main.tex" 1775512929.54815 3542 bcabcdd311e5e4d4b169fc635b7d5720 ""
+  "main.aux" 1776693746.20139 2189 4302bb954c86fd1558a2f0f7c874aa13 "pdflatex"
+  "main.out" 1776693746.20139 1662 665f24b69dc7c416d325cf06e3ae3898 "pdflatex"
+  "main.tex" 1776693745.55641 3537 20c105f2bc1c0b801c313c55dcc6a28e ""
   "section/conclusion.tex" 1775512063.24831 432 ee114e20b5ba31121fd30e344fcf15cd ""
   "section/experiment.tex" 1775519055.88524 317 948bb0cf6888c7806d28eeb07ed7fb69 ""
   "section/introduction.tex" 1775512063.24868 1330 a858990af0591bd4d85de89ded1e2c83 ""
